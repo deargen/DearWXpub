@@ -264,7 +264,7 @@ def DoEvaluationLOOCV(sel_genes):
     PrintResult(data_type[:len(acc_ret)], acc_ret)
 
 if __name__ == '__main__':    
-    RAW_TCGA_DATA_FOLDER_PATH = './TCGA_DATAS/'
+    RAW_TCGA_DATA_FOLDER_PATH = '../TCGA_DATAS/'
     # feature set and training set be the 5:5
     FEATURE_SET_RATIO = 0.5
     # run once, to make tumor/normal feature set and training set
