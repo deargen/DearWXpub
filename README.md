@@ -56,7 +56,7 @@ $ cd DearWXpub
 **Step 4. Do the Feature selection and Get Classification Accuracy**
 
 ```
-$ python wx_tcga.py
+$ python src/wx_tcga.py
 ```
 It will generate preprocessed TCGA data set. And Select features, Get the scores.
 
