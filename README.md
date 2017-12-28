@@ -50,7 +50,7 @@ cd DearWXpub
   
 2. Run tcga_download.R
   ( you may have to install releative packages )
-  you can see the 'TCGA_DATAS' folder in current DearWx path.
+  you can see the 'TCGA_DATAS' folder in current DearWXpub path.
  
 
 **Step 4. Do the Feature selection and Get Classification Accuracy**
