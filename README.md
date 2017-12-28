@@ -9,8 +9,8 @@ A Keras implementation of Wx in preprint, :
  
 **Differences with the paper:**   
 - We use the Keras as Neural Network running framework, original paper used naive tensorflow framework
-- Seleted Features can be diffent as which backend learning framework used
-- Some samples inserted, so we have more samples than paper.
+- Seleted Features can be different as which backend learning framework used
+- Some TCGA samples updated, so we have more samples than paper.
 
 **Contacts**
 - Your contributions to the repo are always welcome. 
@@ -42,7 +42,7 @@ $ cd DearWXpub
 ```
 
 
-**Step 3. Download a TCGA RNA-seq data**
+**Step 3. Download the TCGA RNA-seq data**
 
 1. Download rna-seq via TCGA-Assembler tool
 
@@ -73,7 +73,7 @@ It will generate preprocessed TCGA data set. And Select features, Get the scores
 ***edgeR 14***
 `['LCN1','UMOD','AQP2','PATE4','SLC12A1','OTOP2','ACTN3','KRT36','ATP2A1','PRH2','AGER','PYGM','PRR4','ESRRB']`
 
-#### Cancer Classifiation Accuracy each type
+#### Cancer Classifiation Accuracy
 TCGA data( Downloaded at Dec. 26th. 2017 )
 
 |       |         | Wx 14  |       | Peng 14 |       | EdgeR 14 |        |
