@@ -15,8 +15,8 @@ wx_hyperparam = WxHyperParameter(learning_ratio=0.001)
 def NaiveSLPmodel(x_train, y_train, x_val, y_val, hyper_param=wx_hyperparam):
     input_dim = len(x_train[0])
     inputs = Input((input_dim,))
-    fc_out = Dense(2,  kernel_initializer='zeros', bias_initializer='zeros', activation='softmax')(inputs)
-    #fc_out = Dense(2,  activation='softmax')(inputs)
+    #fc_out = Dense(2,  kernel_initializer='zeros', bias_initializer='zeros', activation='softmax')(inputs)
+    fc_out = Dense(2,  activation='softmax')(inputs)
     model = Model(input=inputs, output=fc_out)
 
     #build a optimizer
