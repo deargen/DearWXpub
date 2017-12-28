@@ -23,22 +23,22 @@ Open an issue or contact me with E-mail `sspark@deargen.me`
 ```
 Experienment Environments
 
-python 3.4
-tensorflow gpu 1.4.0
-keras 2.1.2
+$ python 3.4
+$ tensorflow gpu 1.4.0
+$ keras 2.1.2
 ```
 
 ```
 Install instructions
 
-pip install tensorflow-gpu
-pip install keras
+$ pip install tensorflow-gpu
+$ pip install keras
 ```
 
 **Step 2. Clone this repository to local.**
 ```
-git clone https://github.com/deargen/DearWXpub.git
-cd DearWXpub
+$ git clone https://github.com/deargen/DearWXpub.git
+$ cd DearWXpub
 ```
 
 
@@ -46,9 +46,9 @@ cd DearWXpub
 
 1. Download rna-seq via TCGA-Assembler tool
 
-  - we downloaded tool ('Module_A.R') via  http://www.compgenome.org/TCGA-Assembler/index.php
+  - we downloaded tool (`Module_A.R`) via  http://www.compgenome.org/TCGA-Assembler/index.php
   
-2. Run 'tcga_download.R'
+2. Run `tcga_download.R`
   ( you may have to install releative packages )
   you can see the 'TCGA_DATAS' folder in current DearWXpub path.
  
