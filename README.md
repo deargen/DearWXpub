@@ -46,9 +46,9 @@ cd DearWXpub
 
 1. Download rna-seq via TCGA-Assembler tool
 
-  - we downloaded tool (Module_A.R) via  http://www.compgenome.org/TCGA-Assembler/index.php
+  - we downloaded tool ('Module_A.R') via  http://www.compgenome.org/TCGA-Assembler/index.php
   
-2. Run tcga_download.R
+2. Run 'tcga_download.R'
   ( you may have to install releative packages )
   you can see the 'TCGA_DATAS' folder in current DearWXpub path.
  
