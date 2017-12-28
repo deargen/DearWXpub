@@ -1,6 +1,6 @@
 # DearWXpub
 ## wx keras version for everyone
-## We show the feature selection and classification result on TCGA dataset
+## We show the feature selection and Cancer/Normal classification result on TCGA dataset
 
 A Keras implementation of Wx in preprint, :   
 **[Wx: a neural network-based feature selection algorithm for next-generation sequencing data Sungsoo Park, Bonggun Shin, Yoonjung Choi, Kilsoo Kang, and Keunsoo Kang]**
