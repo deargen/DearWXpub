@@ -56,7 +56,7 @@ $ cd DearWXpub
 
 | 　   | TOTAL | Tumor | Normal | Tumor Ratio(%) |
 |------|-------|-------|--------|----------------|
-| TYPE | 6226  | 5609  | 617    | 90.09          |
+| TYPE | **6226**  | **5609**  | **617**    | **90.09**  |
 | BLCA | 427   | 408   | 19     | 95.55          |
 | BRCA | 1214  | 1101  | 113    | 90.69          |
 | COAD | 327   | 286   | 41     | 87.46          |
@@ -91,7 +91,7 @@ It will generate preprocessed TCGA data set. And Select features, Get the scores
 `['LCN1','UMOD','AQP2','PATE4','SLC12A1','OTOP2','ACTN3','KRT36','ATP2A1','PRH2','AGER','PYGM','PRR4','ESRRB']`
 
 #### Cancer Classifiation Accuracy
-TCGA data( Downloaded at Dec. 26th. 2017 )
+TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection / Half for data for validation
 
 |       |         | Wx 14  |       | Peng 14 |       | EdgeR 14 |        |
 |:-----:|---------|--------|-------|---------|-------|----------|--------|
