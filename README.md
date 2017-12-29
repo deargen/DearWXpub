@@ -53,21 +53,22 @@ $ cd DearWXpub
   you can see the 'TCGA_DATAS' folder in current DearWXpub path.
  
 3. Data Status
-|      | TOTAL | Tumor | Normal |
-|------|-------|-------|--------|
-| TYPE | **6226** | **5609** | **617** |
-| BLCA | 427   | 408   | 19     |
-| BRCA | 1214  | 1101  | 113    |
-| COAD | 327   | 286   | 41     |
-| HNSC | 566   | 522   | 44     |
-| KICH | 90    | 65    | 25     |
-| KIRC | 606   | 534   | 72     |
-| KIRP | 323   | 291   | 32     |
-| LIHC | 424   | 374   | 50     |
-| LUAD | 576   | 517   | 59     |
-| LUSC | 553   | 502   | 51     |
-| PRAD | 549   | 497   | 52     |
-| THCA | 571   | 512   | 59     |
+
+| 　   | TOTAL | Tumor | Normal | Tumor Ratio(%) |
+|------|-------|-------|--------|----------------|
+| TYPE | 6226  | 5609  | 617    | 90.09          |
+| BLCA | 427   | 408   | 19     | 95.55          |
+| BRCA | 1214  | 1101  | 113    | 90.69          |
+| COAD | 327   | 286   | 41     | 87.46          |
+| HNSC | 566   | 522   | 44     | 92.23          |
+| KICH | 90    | 65    | 25     | 72.22          |
+| KIRC | 606   | 534   | 72     | 88.12          |
+| KIRP | 323   | 291   | 32     | 90.09          |
+| LIHC | 424   | 374   | 50     | 88.21          |
+| LUAD | 576   | 517   | 59     | 89.76          |
+| LUSC | 553   | 502   | 51     | 90.78          |
+| PRAD | 549   | 497   | 52     | 90.53          |
+| THCA | 571   | 512   | 59     | 89.67          |
 
 **Step 4. Do the Feature selection and Get Classification Accuracy**
 
