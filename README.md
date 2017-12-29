@@ -93,7 +93,9 @@ It will generate preprocessed TCGA data set. And Select features, Get the scores
 #### Cancer Classifiation Accuracy
 TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection / Half of data for validation
 
-|       |         | Wx 14  |       | Peng 14 |       | EdgeR 14 |        |
+**Accuracy of 14 Biomarker**
+
+|       |         | Wx 14  |       | Peng 14 |       | EdgeR 14 |        |
 |:-----:|---------|--------|-------|---------|-------|----------|--------|
 | TYPE  | SAMPLES | Hit    | Acc(%)| Hit     | Acc(%)| Hit      | Acc(%) |
 | **TOTAL** | **3119** | **3015** | **96.67** | **2961** | **94.93** | **2957** | **94.81** |
@@ -109,3 +111,22 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 | LUSC  | 277     | 272    | 98.19 | 268     | 96.75 | 275      | 99.28  |
 | PRAD  | 275     | 257    | 93.45 | 260     | 94.55 | 254      | 92.36  |
 | THCA  | 286     | 274    | 95.80 | 257     | 89.86 | 258      | 90.21  |
+
+
+**Accuracy of 7 Biomarker**
+
+| 　    | 　   | WX 7 | 　      | Martinez 7 | 　     |
+|-------|------|------|---------|------------|--------|
+| TOTAL | 3119 | 2986 | 95.74   | 　         | 　     |
+| BLCA  | 214  | 205  | 95.79   | 206        | 96.26  |
+| BRCA  | 608  | 591  | 97.20   | 556        | 91.45  |
+| COAD  | 164  | 152  | 92.68   | 　         | 　     |
+| HNSC  | 283  | 269  | 95.05   | 268        | 94.70  |
+| KICH  | 46   | 45   | 97.83   | 　         | 　     |
+| KIRC  | 303  | 299  | 98.68   | 273        | 90.10  |
+| KIRP  | 162  | 162  | 100.00  | 　         | 　     |
+| LIHC  | 212  | 187  | 88.21   | 　         | 　     |
+| LUAD  | 289  | 283  | 97.92   | 260        | 89.97  |
+| LUSC  | 277  | 271  | 97.83   | 257        | 92.78  |
+| PRAD  | 275  | 249  | 90.55   | 　         | 　     |
+| THCA  | 286  | 273  | 95.45   | 　         | 　     |
