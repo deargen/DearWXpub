@@ -52,6 +52,22 @@ $ cd DearWXpub
   ( you may have to install releative packages )
   you can see the 'TCGA_DATAS' folder in current DearWXpub path.
  
+3. Data Status
+|      | TOTAL | Tumor | Normal |
+|------|-------|-------|--------|
+| TYPE | **6226** | **5609** | **617** |
+| BLCA | 427   | 408   | 19     |
+| BRCA | 1214  | 1101  | 113    |
+| COAD | 327   | 286   | 41     |
+| HNSC | 566   | 522   | 44     |
+| KICH | 90    | 65    | 25     |
+| KIRC | 606   | 534   | 72     |
+| KIRP | 323   | 291   | 32     |
+| LIHC | 424   | 374   | 50     |
+| LUAD | 576   | 517   | 59     |
+| LUSC | 553   | 502   | 51     |
+| PRAD | 549   | 497   | 52     |
+| THCA | 571   | 512   | 59     |
 
 **Step 4. Do the Feature selection and Get Classification Accuracy**
 
