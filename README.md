@@ -53,20 +53,20 @@ $ cd DearWXpub
   - you may have to install releative packages
 ```
  - Shall Terminal
-sudo apt-get install libssl-dev
- * deb: libssl-dev (Debian, Ubuntu, etc)
- * rpm: openssl-devel (Fedora, CentOS, RHEL)
- * csw: libssl_dev (Solaris)
- * brew: openssl@1.1 (Mac OSX)
+ $ sudo apt-get install libssl-dev
+   * deb: libssl-dev (Debian, Ubuntu, etc)
+   * rpm: openssl-devel (Fedora, CentOS, RHEL)
+   * csw: libssl_dev (Solaris)
+   * brew: openssl@1.1 (Mac OSX)
  
-sudo apt-get install libcurl4-openssl-dev
- * deb: libcurl4-openssl-dev (Debian, Ubuntu, etc)
- * rpm: libcurl-devel (Fedora, CentOS, RHEL)
- * csw: libcurl_dev (Solaris)
+ $ sudo apt-get install libcurl4-openssl-dev
+   * deb: libcurl4-openssl-dev (Debian, Ubuntu, etc)
+   * rpm: libcurl-devel (Fedora, CentOS, RHEL)
+   * csw: libcurl_dev (Solaris)
 
 - R-studio
-install.packages('curl')
-install.packages('httr')
+ > install.packages('curl')
+ > install.packages('httr')
 ```
   
   
