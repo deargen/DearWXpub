@@ -67,6 +67,8 @@ $ cd DearWXpub
 - R-studio
  > install.packages('curl')
  > install.packages('httr')
+ > install.packages('stringr')
+ > install.packages('rjson')
 ```
   
   

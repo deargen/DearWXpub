@@ -1,0 +1,7 @@
+# gitignore 
+
+
+install_packages.R 
+
+TCGA_DATAS/ 
+
