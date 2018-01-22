@@ -158,6 +158,7 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 
 | 　    | 　   | WX 7 | 　      | Martinez 7 | 　     |
 |-------|------|------|---------|------------|--------|
+| TYPE  | SAMPLES | Hit    | Acc(%)| Hit     | Acc(%)|
 | TOTAL | 3119 | 2986 | 95.74   | 　         | 　     |
 | BLCA  | 214  | 205  | 95.79   | 206        | 96.26  |
 | BRCA  | 608  | 591  | 97.20   | 556        | 91.45  |
