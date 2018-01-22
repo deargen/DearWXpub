@@ -185,8 +185,8 @@ malignant	non-malignant	total
 Dataset splits(trn,dev,tst) = (2888, 723, 902)
 
 Accuracy Result (test set)
-WX14 : 0.91%
-Peng14 : 0.70%
+WX14 : 90.71%
+Peng14 : 70.22%
 ```
 
 ***GSE40418***
@@ -200,6 +200,6 @@ lung adenocarcinomas	adjacent normal tissues	total
 Dataset splits(trn,dev,tst) = (105,27,32)
 
 Accuracy Result(test set)
-WX14 : 0.8%
-Peng14 : 0.57%
+WX14 : 80.00%
+Peng14 : 56.87%
 ```
