@@ -137,14 +137,21 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 
 **Accuracy of 7 Biomarker**
 ***Keras wx 7***
-'EEF1A1', 'FN1', 'GAPDH', 'SFTPC', 'AHNAK', 'KLK3', 'UMOD'
+`'EEF1A1', 'FN1', 'GAPDH', 'SFTPC', 'AHNAK', 'KLK3', 'UMOD'`
+
 ***Martinez 7***
- BLCA : 'SMAD2', 'RUNX2', 'ABTB1', 'ST5', 'CEBPB', 'SETDB1', 'CEBPG'
- BRCA : 'JAK2', 'NFKBIA', 'TBP', 'RXRA', 'VAV1', 'HES5', 'NFKBIB'
- HNSC : 'DUSP16', 'KRT8', 'RAF1', 'MED1', 'PPARG', 'YWHAB', 'FABP1'
- KIRC : 'AR', 'HGS', 'RUNX1', 'BCL3', 'BRCA1', 'STAT2', 'ITGA8'
- LUAD : 'DOK1', 'FUT4', 'INSR', 'ITGB2', 'SHC1', 'PTPRC', 'KHDRBS1'
- LUSC : 'BRCA1', 'ETS2', 'HIF1A', 'JUN', 'LMO4', 'PIAS3', 'RBBP7'
+ `BLCA : 'SMAD2', 'RUNX2', 'ABTB1', 'ST5', 'CEBPB', 'SETDB1', 'CEBPG'`
+ 
+ `BRCA : 'JAK2', 'NFKBIA', 'TBP', 'RXRA', 'VAV1', 'HES5', 'NFKBIB'`
+ 
+ `HNSC : 'DUSP16', 'KRT8', 'RAF1', 'MED1', 'PPARG', 'YWHAB', 'FABP1'`
+ 
+ `KIRC : 'AR', 'HGS', 'RUNX1', 'BCL3', 'BRCA1', 'STAT2', 'ITGA8'`
+ 
+ `LUAD : 'DOK1', 'FUT4', 'INSR', 'ITGB2', 'SHC1', 'PTPRC', 'KHDRBS1'`
+ 
+ `LUSC : 'BRCA1', 'ETS2', 'HIF1A', 'JUN', 'LMO4', 'PIAS3', 'RBBP7'`
+ 
 
 | 　    | 　   | WX 7 | 　      | Martinez 7 | 　     |
 |-------|------|------|---------|------------|--------|
