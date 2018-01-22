@@ -172,3 +172,37 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 | LUSC  | 277  | 271  | 97.83   | 257        | 92.78  |
 | PRAD  | 275  | 249  | 90.55   | 　         | 　     |
 | THCA  | 286  | 273  | 95.45   | 　         | 　     |
+
+**Additional Validation**
+
+***GSE72056***
+
+`암종: melanoma
+
+malignant	non-malignant	total
+
+1257         	3256      	4513
+
+Dataset splits(trn,dev,tst) = (2888, 723, 902)
+
+Accuracy Result
+
+WX14 : 0.91
+
+Peng14 : 0.70`
+
+***GSE40418***
+
+`암종: lung
+
+lung adenocarcinomas	adjacent normal tissues	total
+
+  87	                       77          	164
+
+Dataset splits(trn,dev,tst) = (105,27,32)
+
+Accuracy Result
+
+WX14 : 0.8
+
+Peng14 : 0.57`
