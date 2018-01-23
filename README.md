@@ -178,7 +178,7 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 ***GSE72056***
 
 ```
-암종: melanoma
+Cancer type : melanoma
 malignant	non-malignant	total
 1257         	3256      	4513
 
@@ -192,7 +192,7 @@ Peng14 : 70.22%
 ***GSE40418***
 
 ```
-암종: lung
+Cancer type : luad(lung)
 
 lung adenocarcinomas	adjacent normal tissues	total
           87	                   77           	164
