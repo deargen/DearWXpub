@@ -1,13 +1,15 @@
 import os
 import numpy as np
 import pandas as pd
-import _pickle as cPickle #for pyton3.x
+import sys 
+#import _pickle as cPickle #for pyton3.x
 from sklearn.utils import shuffle
 from sklearn import cross_validation
 from keras.utils import to_categorical
 from wx_hyperparam import WxHyperParameter
 from wx_core import WxSlp, ClassifierLoocv
 
+if sys.version_info.major==3: import _pickle as cPickle 
 FEATURE_SET_DF_FILE_NAME = 'cancer12_feature_set_df.cpickle' 
 TRAIN_SET_DF_FILE_NAME = 'cancer12_train_set_df.cpickle'
 TCGA_ASSEM_GENE_FILE_NAME = 'GENE_LIST_TCGA_ASSEM.txt'
