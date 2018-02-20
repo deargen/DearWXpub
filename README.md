@@ -139,7 +139,7 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 | PRAD  | 275     | 257    | 93.45 | 260     | 94.55 | 254      | 92.36  |
 | THCA  | 286     | 274    | 95.80 | 257     | 89.86 | 258      | 90.21  |
 
-**WX 14 AUC curve (LUAD)**
+**WX 14 AUC curve (LUSC, LUAD, BRCA)**
 
 ![roc_wx14_lusc](https://user-images.githubusercontent.com/4970569/36409868-60e728e8-1651-11e8-9fef-11c660fc3f68.png)
 ![roc_wx14_luad](https://user-images.githubusercontent.com/4970569/36409921-9d9019c6-1651-11e8-8520-453fcd4d4afa.png)
