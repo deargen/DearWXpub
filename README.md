@@ -108,6 +108,7 @@ It will generate preprocessed TCGA data set. And Select features, Get the scores
 
 ***Peng 14***
 `['KIF4A','NUSAP1','HJURP','NEK2','FANCI','DTL','UHRF1','FEN1','IQGAP3','KIF20A','TRIM59','CENPL','C16ORF59','UBE2C']`
+ 
  with WX ranking
 `['KIF4A'(12970),'NUSAP1'(15886),'HJURP'(11479),'NEK2'(11939),'FANCI'(17123),'DTL'(12600),'UHRF1'(11825),
 'FEN1'(17497),'IQGAP3'(14173),'KIF20A'(13057),'TRIM59'(11113),'CENPL'(10344),'C16ORF59'(9463),'UBE2C'(9039)]`
