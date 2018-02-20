@@ -117,6 +117,10 @@ It will generate preprocessed TCGA data set. And Select features, Get the scores
 ***edgeR 14***
 `['LCN1','UMOD','AQP2','PATE4','SLC12A1','OTOP2','ACTN3','KRT36','ATP2A1','PRH2','AGER','PYGM','PRR4','ESRRB']`
 
+with WX ranking
+`['LCN1'(3847),'UMOD'(7),'AQP2'(106),'PATE4'(5878),'SLC12A1'(165),'OTOP2'(7785),'ACTN3'(4939),'KRT36'(9441),
+'ATP2A1'(14193),'PRH2'(2155),'AGER'(934),'PYGM'(13688),'PRR4'(2151),'ESRRB'(9630)]`
+
 #### Cancer Classifiation Accuracy
 TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection / Half of data for validation
 
