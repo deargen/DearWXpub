@@ -205,7 +205,7 @@ WX14 : 90.71%
 Peng14 : 70.22%
 ```
 
-***GSE40418***
+***GSE40419***
 
 ```
 Cancer type : luad(lung)
