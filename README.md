@@ -195,8 +195,11 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 
 ```
 Cancer type : melanoma
-malignant	 normal 	total
-1257       3256   	4513
+
+Sample size
+malignant : 1257
+normal : 3256
+total : 4513
 
 Dataset splits(trn,dev,tst) = (3611, 902)
 We perfomred the 5 fold cross validation
@@ -211,8 +214,10 @@ Peng14 : 70.22%
 ```
 Cancer type : luad(lung)
 
-malignant	normal 	total
-   87	      77   	164
+Sample size
+malignant : 87
+normal : 77
+total : 164
 
 Dataset splits(trn,dev,tst) = (132,32)
 We perfomred the 5 fold cross validation
@@ -227,8 +232,10 @@ Peng14 : 56.87%
 ```
 Cancer type : Head and Neck(sinle cell)
 
-malignant	 normal 	total
-  2215    	3687   	5902
+Sample size
+malignant : 2215
+normal : 3687
+total : 5902
 
 Dataset splits(trn+dev,tst) = (4722,1180)
 We perfomred the 5 fold cross validation
