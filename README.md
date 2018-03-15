@@ -195,10 +195,11 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 
 ```
 Cancer type : melanoma
-malignant	non-malignant	total
-1257         	3256      	4513
+malignant	 normal 	total
+1257       3256   	4513
 
-Dataset splits(trn,dev,tst) = (2888, 723, 902)
+Dataset splits(trn,dev,tst) = (3611, 902)
+We perfomred the 5 fold cross validation
 
 Accuracy Result (test set)
 WX14 : 90.71%
@@ -210,10 +211,11 @@ Peng14 : 70.22%
 ```
 Cancer type : luad(lung)
 
-lung adenocarcinomas	adjacent normal tissues	total
-          87	                   77           	164
+malignant	normal 	total
+   87	      77   	164
 
-Dataset splits(trn,dev,tst) = (105,27,32)
+Dataset splits(trn,dev,tst) = (132,32)
+We perfomred the 5 fold cross validation
 
 Accuracy Result(test set)
 WX14 : 80.00%
@@ -225,11 +227,11 @@ Peng14 : 56.87%
 ```
 Cancer type : Head and Neck(sinle cell)
 
-malignant	non-malignant	total
-2215         	3687      	5902
+malignant	 normal 	total
+  2215    	3687   	5902
 
 Dataset splits(trn+dev,tst) = (4722,1180)
-We perfomred 5 fold cross validation
+We perfomred the 5 fold cross validation
 
 Accuracy Result(test set, 1180)
 WX14 : 81.10%
