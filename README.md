@@ -219,3 +219,20 @@ Accuracy Result(test set)
 WX14 : 80.00%
 Peng14 : 56.87%
 ```
+
+***GSE103322***
+
+```
+Cancer type : Head and Neck(sinle cell)
+
+malignant	non-malignant	total
+2215         	3687      	5902
+
+Dataset splits(trn+dev,tst) = (4722,1180)
+We perfomred 5 fold cross validation
+
+Accuracy Result(test set, 1180)
+WX14 : 81.10%
+Peng14 : 68.28%
+```
+
