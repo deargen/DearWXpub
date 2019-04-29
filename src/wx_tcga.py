@@ -1,48 +1,58 @@
 import os
 import numpy as np
 import pandas as pd
-import sys 
-#import _pickle as cPickle #for pyton3.x
+import _pickle as cPickle #for pyton3.x
 from sklearn.utils import shuffle
 from sklearn import cross_validation
 from keras.utils import to_categorical
 from wx_hyperparam import WxHyperParameter
-from wx_core import WxSlp, ClassifierLoocv
+from wx_core import wx_slp, wx_mlp, connection_weight, classifier_LOOCV
+from tqdm import tqdm
 
-if sys.version_info.major==3: import _pickle as cPickle 
-FEATURE_SET_DF_FILE_NAME = 'cancer12_feature_set_df.cpickle' 
-TRAIN_SET_DF_FILE_NAME = 'cancer12_train_set_df.cpickle'
-TCGA_ASSEM_GENE_FILE_NAME = 'GENE_LIST_TCGA_ASSEM.txt'
+FLAG_DO_ROC = False
+ROC_CANCER_NAME = 'LUSC'
 
-def StandByRow(data_frame):
-    data_frame_tumor = data_frame['Tumor']
-    data_frame_type = data_frame['CancerName']
-    data_frame = data_frame.drop(['Tumor','CancerName'],axis=1)
+if FLAG_DO_ROC:
+    from sklearn import metrics
+    #import scikitplot as skplt
+    import matplotlib.pyplot as plt
+
+FEATURE_SET_DF_FILE_NAME = '../../tcga_save_data/cancer12_feature_set_df.cpickle' 
+TRAIN_SET_DF_FILE_NAME = '../../tcga_save_data/cancer12_train_set_df.cpickle'
+TCGA_ASSEM_GENE_FILE_NAME = '../GENE_LIST_TCGA_ASSEM.txt'
+
+
+def StandByRow(data_frame, unused_cols=['Tumor','CancerName']):
+    unused_cols_list = []
+    for col_ in unused_cols:
+        unused_cols_list.append(data_frame[col_])
+    data_frame = data_frame.drop(unused_cols,axis=1)
 
     data_frame = data_frame.astype(float)
     data_frame.fillna(0, inplace=True)
     data_frame = data_frame.apply(lambda x: ((x-x.mean())/x.std()), axis=1)
 
-    data_frame['Tumor'] = data_frame_tumor
-    data_frame['CancerName'] = data_frame_type	
+    for n,col_ in enumerate(unused_cols):
+        data_frame[col_] = unused_cols_list[n]
 
     return data_frame
 
-def StandByCol(data_frame):
-    data_frame_tumor = data_frame['Tumor']
-    data_frame_type = data_frame['CancerName']
-    data_frame = data_frame.drop(['Tumor','CancerName'],axis=1)
+def StandByCol(data_frame, unused_cols=['Tumor','CancerName']):
+    unused_cols_list = []
+    for col_ in unused_cols:
+        unused_cols_list.append(data_frame[col_])
+    data_frame = data_frame.drop(unused_cols,axis=1)
 
     data_frame = data_frame.astype(float)
     data_frame.fillna(0, inplace=True)
     data_frame = data_frame.apply(lambda x: ((x-x.mean())/x.std()), axis=0)
 
-    data_frame['Tumor'] = data_frame_tumor
-    data_frame['CancerName'] = data_frame_type	
+    for n,col_ in enumerate(unused_cols):
+        data_frame[col_] = unused_cols_list[n]
 
     return data_frame
 
-def GetValueListFromFile(file_name):
+def get_value_list_from_file(file_name):
     values = []
     with open(file_name,'rt') as rFile:
         for line in rFile:
@@ -50,7 +60,7 @@ def GetValueListFromFile(file_name):
             values.append(line)
     return values
 
-def PreprocessTCGAassembler(data_path, feature_set_ratio):
+def preprocess_TCGA_assembler(data_path, feature_set_ratio):
     def walk_the_tree(dir_path):
         list_file = []
         for root, directories, files in os.walk(dir_path):
@@ -62,7 +72,7 @@ def PreprocessTCGAassembler(data_path, feature_set_ratio):
     list_file = walk_the_tree(data_path)
     feature_df = []
     train_df = []  
-    assem_gene_list = GetValueListFromFile(TCGA_ASSEM_GENE_FILE_NAME)
+    assem_gene_list = get_value_list_from_file(TCGA_ASSEM_GENE_FILE_NAME)
 
     for file in list_file:
         cur_type = file.split('__')[0]
@@ -141,7 +151,7 @@ def PreprocessTCGAassembler(data_path, feature_set_ratio):
     cPickle.dump(train_df, open(TRAIN_SET_DF_FILE_NAME,'wb'),protocol=-1)
     print('Saving TCGA Cancer 12 type Dataframe done...')
 
-def LoadNormFeatureSet(df, validation_ratio, RANDOM_STATE):
+def load_norm_feature_set(df, validation_ratio, RANDOM_STATE):
     df_cancer = df[df.Tumor == True]
     df_cancer = df_cancer.drop(['Tumor','CancerName'],axis=1)
 
@@ -188,20 +198,33 @@ def LoadNormFeatureSet(df, validation_ratio, RANDOM_STATE):
     return np.asarray(train_x), np.asarray(train_y), np.asarray(val_x), np.asarray(val_y) 
     
 
-def DoFeatureSelection(n_sel = 14):
-    VALIDATION_RATIO = 0.2
-    ITERATION = 1000
+def wx_feature_selection(n_sel = 14, val_ratio = 0.2, iter=1000, epochs=30, learning_ratio=0.001, batch_size=32, 
+                        verbose=False, except_norm=['Tumor','CancerName'], model_type='MLP'):
+    VALIDATION_RATIO = 0.1#val_ratio
+    ITERATION = iter
     df = cPickle.load(open(FEATURE_SET_DF_FILE_NAME,'rb'))
-    df = StandByRow(df)
+    if False:
+        df2 = cPickle.load(open(TRAIN_SET_DF_FILE_NAME,'rb'))
+        LIMIT_SAMPLE = 5000
+        df = pd.concat([df,df2])
+        df = df[:LIMIT_SAMPLE]
+    df = StandByRow(df,except_norm)
     print('Feature Data Frame : ',df.shape)
-    gene_names = GetValueListFromFile('GENE_LIST_TCGA_ASSEM.txt')    
+
+    gene_names = get_value_list_from_file(TCGA_ASSEM_GENE_FILE_NAME)
     feature_num = len(gene_names)
     all_weight = np.zeros(feature_num)    
     all_count = np.ones(feature_num)
     for i in range(0, ITERATION):
-        train_x, train_y, val_x, val_y = LoadNormFeatureSet(df, VALIDATION_RATIO, i)
-        hp = WxHyperParameter(epochs=30, learning_ratio=0.001, batch_size=32)
-        sel_idx, sel_weight, val_acc = WxSlp(train_x, train_y, val_x, val_y, n_selection=min(n_sel*100, feature_num), hyper_param=hp)
+        train_x, train_y, val_x, val_y = load_norm_feature_set(df, VALIDATION_RATIO, i)
+        print(i, 'train : ',train_x.shape, 'val : ',val_x.shape)
+        hp = WxHyperParameter(epochs=epochs, learning_ratio=learning_ratio, batch_size=batch_size, verbose=verbose)
+        if model_type == 'MLP':
+            sel_idx, sel_weight, val_acc = wx_mlp(train_x, train_y, val_x, val_y, n_selection=min(n_sel*100, feature_num), hyper_param=hp)
+        if model_type == 'SLP':
+            sel_idx, sel_weight, val_acc = wx_slp(train_x, train_y, val_x, val_y, n_selection=min(n_sel*100, feature_num), hyper_param=hp)
+        if model_type == 'ConnectionWeight':
+            sel_idx, sel_weight, val_acc = connection_weight(train_x, train_y, val_x, val_y, n_selection=min(n_sel*100, feature_num), hyper_param=hp)            
         for j in range(0,min(n_sel*100, feature_num)):
             all_weight[sel_idx[j]] += sel_weight[j]
             all_count[sel_idx[j]] += 1
@@ -214,14 +237,17 @@ def DoFeatureSelection(n_sel = 14):
 
     return sel_index, sel_genes, sel_weight
 
-def DoEvaluationLOOCV(sel_genes):
+def evaluation_LOOCV(sel_genes, method_clf='xgb', verbose=False, norm_method='no'):
     RANDOM_STATE = 1
     VAL_RATIO = 0.2
     
-    def DoLOOCV(all_x, all_y):
+    def do_LOOCV(all_x, all_y):
         loo = cross_validation.LeaveOneOut(len(all_x))
         acc = []
-        for train_index, test_index in loo:
+        cancer_prob = []
+        labels = []
+        cnt=0
+        for train_index, test_index in tqdm(loo):
             train_val_x, test_x = all_x[train_index], all_x[test_index]
             train_val_y, test_y = all_y[train_index], all_y[test_index]
 
@@ -234,63 +260,107 @@ def DoEvaluationLOOCV(sel_genes):
             val_x = train_val_x[n_trn:]
             val_y = train_val_y[n_trn:]     
 
-            is_correct = ClassifierLoocv(train_x, train_y, val_x, val_y, test_x, test_y)
-            acc.append(is_correct)
+            prob = classifier_LOOCV(train_x, train_y, val_x, val_y, test_x, test_y, method_clf=method_clf, verbose=verbose)
+            if prob >= 0.5:
+                pred_y = True
+            else:
+                pred_y = False
+            acc.append(test_y == pred_y)
+            labels.append(test_y[0])
+            cancer_prob.append(prob)
 
-        return acc            
+        #cacul ROC and draw ROC
+        if FLAG_DO_ROC:
+            fpr, tpr, _ = metrics.roc_curve(labels,  cancer_prob)
+            auc = metrics.roc_auc_score(labels, cancer_prob)            
 
-    def PrintResult(cancer_type, acc):
+            plt.figure()
+            lw = 2
+            plt.plot(fpr, tpr, color='darkorange',
+                    lw=lw, label='ROC curve (area = %0.4f)' % auc)
+            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title(ROC_CANCER_NAME)# + ' - Receiver operating characteristic')
+            plt.legend(loc="lower right")
+            plt.show()
+            
+        return acc
+
+    def print_result(cancer_type, acc):
         data = []
         for i, ct in enumerate(cancer_type):
             data.append([ct, acc[i]])
 
         df = pd.DataFrame(data, columns=['Type', 'Acc'])
+        # print(df.head)
         groupby_type = df['Acc'].groupby(df['Type'])
         print (groupby_type.describe())    
             
     type_acc = 0
-    gene_names = GetValueListFromFile('GENE_LIST_TCGA_ASSEM.txt')    
+    gene_names = get_value_list_from_file(TCGA_ASSEM_GENE_FILE_NAME)
     df = cPickle.load(open(TRAIN_SET_DF_FILE_NAME,'rb'))
-    #df = StandByRow(df)
+    if FLAG_DO_ROC:    
+        df = df[df.CancerName == ROC_CANCER_NAME]#specific cancer only
+
+
+
     sel_genes.append('Tumor')
     sel_genes.append('CancerName')
-    df = df[sel_genes]
+    if norm_method=='after':
+        df = df[sel_genes]
+        df = StandByRow(df)
+    if norm_method=='before':
+        df = StandByRow(df)                
+        df = df[sel_genes]
+    if norm_method=='no':
+        df = df[sel_genes]        
 
-    data_label = df['Tumor'].values #tumor or normal label
+    data_label = df['Tumor'].values.astype(int) #tumor or normal label
     data_type = df['CancerName'].values #cancer type
     df = df.drop(['Tumor', 'CancerName'],axis=1)
     data_x = df.values #seleted features
 
     #let the data ordering be same
-    acc_ret = DoLOOCV(data_x, data_label)
-    PrintResult(data_type[:len(acc_ret)], acc_ret)
+    acc_ret = do_LOOCV(data_x, data_label)
+    print_result(data_type[:len(acc_ret)], acc_ret)
 
 if __name__ == '__main__':    
-    RAW_TCGA_DATA_FOLDER_PATH = '../TCGA_DATAS/'
+
+    RAW_TCGA_DATA_FOLDER_PATH = '../../TCGA_DATAS_ASSEM/'
     # feature set and training set be the 5:5
     FEATURE_SET_RATIO = 0.5
+
     # run once, to make tumor/normal feature set and training set
     if os.path.exists(FEATURE_SET_DF_FILE_NAME) == False:
         print ('DO preprocess TCGA data...')
-        PreprocessTCGAassembler(RAW_TCGA_DATA_FOLDER_PATH, FEATURE_SET_RATIO)
+        preprocess_TCGA_assembler(RAW_TCGA_DATA_FOLDER_PATH, FEATURE_SET_RATIO)
 
-    sel_idx, sel_genes, sel_weight = DoFeatureSelection()
-
-    print ('\nSingle Layer WX')
-    print ('selected feature index:',sel_idx)
-    print ('selected feature genes:',sel_genes)
-    print ('selected feature weights:',sel_weight)
+    if True:
+        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+        sel_idx, sel_genes, sel_weight = wx_feature_selection(n_sel = 14, val_ratio = 0.2, iter=10, epochs=30,
+                                    learning_ratio=0.001, batch_size=128, verbose=False, except_norm=['Tumor','CancerName'], model_type='ConnectionWeight')
+        print ('\nSingle Layer WX')
+        print ('selected feature index:',sel_idx)
+        print ('selected feature genes:',sel_genes)
+        print ('selected feature weights:',sel_weight)
 
     #Keras wx 14
-    #sel_genes = ['EEF1A1', 'FN1', 'GAPDH', 'SFTPC', 'AHNAK', 'KLK3', 'UMOD', 'CTSB', 'COL1A1', 'GPX3', 'GNAS', 'ACTB', 'SFTPB', 'ATP1A1']
+    #TCGA-ASSEM DATA
+    # sel_genes = ['EEF1A1', 'FN1', 'GAPDH', 'SFTPC', 'AHNAK', 'KLK3', 'UMOD', 'CTSB', 'COL1A1', 'GPX3', 'GNAS', 'ACTB', 'SFTPB', 'ATP1A1']
 
     #bioarix(naive tensorflow) wx 14
-    #sel_genes = ['FN1', 'EEF1A1', 'SFTPC', 'GAPDH', 'UMOD', 'GPX3', 'FTL', 'ALB', 'P4HB', 'DCN', 'A2M', 'MGP', 'ACPP', 'CTSD']
+    # sel_genes = ['FN1', 'EEF1A1', 'SFTPC', 'GAPDH', 'UMOD', 'GPX3', 'FTL', 'ALB', 'P4HB', 'DCN', 'A2M', 'MGP', 'ACPP', 'CTSD']
 
     #Peng 14
-    #sel_genes = ['KIF4A','NUSAP1','HJURP','NEK2','FANCI','DTL','UHRF1','FEN1','IQGAP3','KIF20A','TRIM59','CENPL','C16orf59','UBE2C']
+    # sel_genes = ['KIF4A','NUSAP1','HJURP','NEK2','FANCI','DTL','UHRF1','FEN1','IQGAP3','KIF20A','TRIM59','CENPL','C16orf59','UBE2C']
 
     #edgeR 14    
-    #sel_genes = ['LCN1','UMOD','AQP2','PATE4','SLC12A1','OTOP2','ACTN3','KRT36','ATP2A1','PRH2','AGER','PYGM','PRR4','ESRRB']
+    # sel_genes = ['LCN1','UMOD','AQP2','PATE4','SLC12A1','OTOP2','ACTN3','KRT36','ATP2A1','PRH2','AGER','PYGM','PRR4','ESRRB']
 
-    DoEvaluationLOOCV(sel_genes)
+    #Connection Weight(Olden's ANN feature selection)
+    # sel_genes = ['FN1','GAPDH','TCEAL7','NSL1','WNT6','TAF2','LYRM2','WWOX','ZADH2','NRD1','ZBTB10','SNORA2A','FAM120A','VCAM1']    
+
+    evaluation_LOOCV(sel_genes, method_clf='xgb', verbose=False, norm_method='after')
