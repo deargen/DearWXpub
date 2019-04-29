@@ -10,7 +10,7 @@ from wx_hyperparam import WxHyperParameter
 from wx_core import wx_slp, wx_mlp, classifier_LOOCV
 from tqdm import tqdm
 
-def StandByRow(data_frame, unused_cols=['Tumor','CancerName']):
+def StandByRow(data_frame, unused_cols=[]):
     unused_cols_list = []
     for col_ in unused_cols:
         unused_cols_list.append(data_frame[col_])
@@ -251,9 +251,9 @@ def evaluation_LOOCV(df, sel_genes, gene_names, method_clf='xgb', verbose=False,
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--gse', type=int, default=105127, help='gse number')
-    parser.add_argument('--gpu', type=int, default=1, help='gpu num')    
-    parser.add_argument('--n_sel', type=int, default=200, help='sel gene num')
-    parser.add_argument('--eval_gene', type=int, default=10, help='eval gene num')    
+    parser.add_argument('--gpu', type=int, default=0, help='gpu num')    
+    parser.add_argument('--n_sel', type=int, default=30, help='sel gene num')
+    parser.add_argument('--eval_gene', type=int, default=30, help='eval gene num')    
     args, unparsed = parser.parse_known_args()
 
     gse_number = args.gse
@@ -261,12 +261,14 @@ if __name__ == '__main__':
     n_sel = args.n_sel
     eval_gene_number = args.eval_gene
 
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_number)
+
     if gse_number == 112057:
         sel_class = ['Crohn Disease', 'Oligoarticular JIA', 'Polyarticular JIA', 'Systemic JIA', 'Ulcerative Colitis', 'Control']
-        df, f_names = make_data_frame_GSE112057('../../GSE_DATA/', sel_class = sel_class, norm_flag=False)
+        df, f_names = make_data_frame_GSE112057('../GSE_DATA/', sel_class = sel_class, norm_flag=False)
     if gse_number == 105127:
         sel_class = ['CV','IZ','PP']
-        df, f_names = make_data_frame_GSE105127('../../GSE_DATA/Total_hg38.txt', sel_class = sel_class, norm_flag=True)
+        df, f_names = make_data_frame_GSE105127('../GSE_DATA/Total_hg38.txt', sel_class = sel_class, norm_flag=True)
 
     def get_before_df(label):
         df_label = df[df.label == label]
@@ -306,7 +308,7 @@ if __name__ == '__main__':
     sel_genes = cPickle.load(open('gse'+str(gse_number)+'_sel_genes.cpickle','rb'))
     sel_genes = sel_genes[:eval_gene_number]
 
-    tot_cnt, hit_cnt = evaluation_LOOCV(df_eval, sel_genes.tolist(), f_names, method_clf='svm', verbose=False, norm_method='no', num_cls=len(sel_class))
+    tot_cnt, hit_cnt = evaluation_LOOCV(df_eval, sel_genes.tolist(), f_names, method_clf='xgb', verbose=False, norm_method='no', num_cls=len(sel_class))
 
     for i in range(0,len(tot_cnt)):
         print(sel_class[i], int(tot_cnt[i]), int(hit_cnt[i]), float(hit_cnt[i]/tot_cnt[i]*100))
