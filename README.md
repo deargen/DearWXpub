@@ -189,19 +189,19 @@ TCGA data( Downloaded at Dec. 26th. 2017 ), Half of data for feature selection /
 | PRAD  | 275  | 249  | 90.55   | 　         | 　     |
 | THCA  | 286  | 273  | 95.45   | 　         | 　     |
 
-**Wx example from actual data file**
+## Wx example from actual data file
 
 ```
 $ python src/wx_examples.py
 ```
-**Wx example for k > 2**
+## Wx example for k > 2
 
 ```
 $ python src/wx_gse_multi_class.py
 ```
 
 
-**Additional Validation**
+## Additional Validation
 
 ***GSE72056***
 
