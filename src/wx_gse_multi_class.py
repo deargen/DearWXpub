@@ -265,10 +265,10 @@ if __name__ == '__main__':
 
     if gse_number == 112057:
         sel_class = ['Crohn Disease', 'Oligoarticular JIA', 'Polyarticular JIA', 'Systemic JIA', 'Ulcerative Colitis', 'Control']
-        df, f_names = make_data_frame_GSE112057('../GSE_DATA/', sel_class = sel_class, norm_flag=False)
+        df, f_names = make_data_frame_GSE112057('./GSE_DATA/', sel_class = sel_class, norm_flag=False)
     if gse_number == 105127:
         sel_class = ['CV','IZ','PP']
-        df, f_names = make_data_frame_GSE105127('../GSE_DATA/Total_hg38.txt', sel_class = sel_class, norm_flag=True)
+        df, f_names = make_data_frame_GSE105127('./GSE_DATA/Total_hg38.txt', sel_class = sel_class, norm_flag=True)
 
     def get_before_df(label):
         df_label = df[df.label == label]
@@ -295,7 +295,6 @@ if __name__ == '__main__':
     df_eval = df_eval.drop('id', axis=1)
 
     if True:
-        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
         sel_idx, sel_genes, sel_weight = wx_feature_selection(df=df_feature_select, gene_names=f_names, n_sel = n_sel, val_ratio = 0.2, iter=10, epochs=30,
                                     learning_ratio=0.001, batch_size=16, verbose=False, model_type='SLP', num_cls=len(sel_class))
         print ('\nSingle Layer WX')

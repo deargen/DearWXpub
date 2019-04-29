@@ -17,10 +17,9 @@ if FLAG_DO_ROC:
     #import scikitplot as skplt
     import matplotlib.pyplot as plt
 
-FEATURE_SET_DF_FILE_NAME = '../../tcga_save_data/cancer12_feature_set_df.cpickle' 
-TRAIN_SET_DF_FILE_NAME = '../../tcga_save_data/cancer12_train_set_df.cpickle'
-TCGA_ASSEM_GENE_FILE_NAME = '../GENE_LIST_TCGA_ASSEM.txt'
-
+FEATURE_SET_DF_FILE_NAME = './cancer12_feature_set_df.cpickle' 
+TRAIN_SET_DF_FILE_NAME = './cancer12_train_set_df.cpickle'
+TCGA_ASSEM_GENE_FILE_NAME = './GENE_LIST_TCGA_ASSEM.txt'
 
 def StandByRow(data_frame, unused_cols=['Tumor','CancerName']):
     unused_cols_list = []
@@ -235,7 +234,7 @@ def wx_feature_selection(n_sel = 14, val_ratio = 0.2, iter=1000, epochs=30, lear
     gene_names = np.asarray(gene_names)
     sel_genes = gene_names[sel_index]
 
-    return sel_index, sel_genes, sel_weight
+    return sel_index, sel_genes.tolist(), sel_weight
 
 def evaluation_LOOCV(sel_genes, method_clf='xgb', verbose=False, norm_method='no'):
     RANDOM_STATE = 1
@@ -305,8 +304,6 @@ def evaluation_LOOCV(sel_genes, method_clf='xgb', verbose=False, norm_method='no
     if FLAG_DO_ROC:    
         df = df[df.CancerName == ROC_CANCER_NAME]#specific cancer only
 
-
-
     sel_genes.append('Tumor')
     sel_genes.append('CancerName')
     if norm_method=='after':
@@ -329,7 +326,7 @@ def evaluation_LOOCV(sel_genes, method_clf='xgb', verbose=False, norm_method='no
 
 if __name__ == '__main__':    
 
-    RAW_TCGA_DATA_FOLDER_PATH = '../../TCGA_DATAS_ASSEM/'
+    RAW_TCGA_DATA_FOLDER_PATH = './TCGA_DATAS/'
     # feature set and training set be the 5:5
     FEATURE_SET_RATIO = 0.5
 
@@ -341,11 +338,13 @@ if __name__ == '__main__':
     if True:
         os.environ["CUDA_VISIBLE_DEVICES"] = "0"
         sel_idx, sel_genes, sel_weight = wx_feature_selection(n_sel = 14, val_ratio = 0.2, iter=10, epochs=30,
-                                    learning_ratio=0.001, batch_size=128, verbose=False, except_norm=['Tumor','CancerName'], model_type='ConnectionWeight')
+                                    learning_ratio=0.001, batch_size=128, verbose=False, except_norm=['Tumor','CancerName'], model_type='SLP')
+
         print ('\nSingle Layer WX')
         print ('selected feature index:',sel_idx)
         print ('selected feature genes:',sel_genes)
         print ('selected feature weights:',sel_weight)
+
 
     #Keras wx 14
     #TCGA-ASSEM DATA
