@@ -1,5 +1,6 @@
 # DearWXpub
 ## wx keras version for everyone
+## Web tool : https://wx.deargendev.me/
 ## We show the feature selection and Cancer/Normal classification result on TCGA dataset
 
 A Keras implementation of Wx in preprint, :   
@@ -9,7 +10,7 @@ A Keras implementation of Wx in preprint, :
  
 **Differences with the paper:**   
 - We use the Keras as Neural Network running framework, original paper used naive tensorflow framework
-- Seleted Features can be different as which backend learning framework used
+- Selected Features can be different as which backend learning framework used
 - Some TCGA samples updated, so we have more samples than paper.
 
 **Contacts**
