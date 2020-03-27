@@ -103,14 +103,23 @@ def naive_SLP_model(x_train, y_train, x_val, y_val, hyper_param=wx_hyperparam, n
         exp_num = int(epoch/10)+1       
         return float(hyper_param.learning_ratio/(10 ** exp_num))
 
-    best_model_path="../slp_wx_weights_best"+".hdf5"
-    save_best_model = ModelCheckpoint(best_model_path, monitor="val_loss", verbose=hyper_param.verbose, save_best_only=True, mode='min')
+    best_model_path="./slp_wx_weights_best"+".hdf5"
     #save_best_model = ModelCheckpoint(best_model_path, monitor="val_acc", verbose=1, save_best_only=True, mode='max')
     change_lr = LearningRateScheduler(step_decay)                                
 
-    #run train
-    history = model.fit(x_train, y_train, validation_data=(x_val,y_val), 
-                epochs=hyper_param.epochs, batch_size=hyper_param.batch_size, shuffle=True, callbacks=[save_best_model, change_lr], verbose=hyper_param.verbose)
+    if len(x_train) + len(x_val) < 10 :
+        save_best_model = ModelCheckpoint(best_model_path, monitor="loss", verbose=1, save_best_only=True, mode='min')
+        if len(x_val) != 0 :         
+            x_train = np.concatenate((x_train, x_val), axis=0)
+            y_train = np.concatenate((y_train, y_val), axis=0)
+        #run train
+        history = model.fit(x_train, y_train,
+                    epochs=hyper_param.epochs, batch_size=hyper_param.batch_size, shuffle=True, callbacks=[save_best_model, change_lr])
+
+    else :
+        save_best_model = ModelCheckpoint(best_model_path, monitor="val_loss", verbose=1, save_best_only=True, mode='min')
+        history = model.fit(x_train, y_train, validation_data=(x_val,y_val), 
+                    epochs=hyper_param.epochs, batch_size=hyper_param.batch_size, shuffle=True, callbacks=[save_best_model, change_lr])
 
     #load best model
     model.load_weights(best_model_path)
@@ -199,9 +208,14 @@ def wx_slp(x_train, y_train, x_val, y_val, n_selection=100, hyper_param=wx_hyper
     selected_idx = np.argsort(wx_abs)[::-1][0:n_selection]
     selected_weights = wx_abs[selected_idx]
 
-    #get evaluation acc from best model
-    loss, val_acc = model.evaluate(x_val, y_val)
 
+    #get evaluation acc from best model
+    if len(x_val) != 0 :    
+        loss, val_acc = model.evaluate(x_val, y_val)
+    else :
+        loss = 0
+        val_acc = 0
+        
     K.clear_session()
 
     return selected_idx, selected_weights, val_acc
